@@ -1,0 +1,3 @@
+User-agent: *
+Disallow:
+Sitemap: https://agrigento.pl/sitemap.xml

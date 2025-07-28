@@ -1,3 +1,9 @@
 User-agent: *
-Disallow:
+Allow: /
+
+# Sitemap
 Sitemap: https://agrigento.pl/sitemap.xml
+
+# Disallow admin or private areas (if any)
+Disallow: /forms/
+Disallow: /assets/vendor/

@@ -9,6 +9,58 @@
 (function() {
   "use strict";
 
+  // Language switching functionality
+  let currentLanguage = 'en';
+
+  function switchLanguage(lang) {
+    currentLanguage = lang;
+    
+    // Update language buttons
+    document.querySelectorAll('.language-switcher .btn').forEach(btn => {
+      btn.classList.remove('active');
+    });
+    document.querySelector(`#lang-${lang}`).classList.add('active');
+    
+    // Update page title
+    const title = document.querySelector('title');
+    if (title) {
+      title.textContent = title.getAttribute(`data-${lang}`) || title.textContent;
+    }
+    
+    // Update all elements with data attributes (en, it, pl)
+    document.querySelectorAll('[data-en][data-it][data-pl]').forEach(element => {
+      const newText = element.getAttribute(`data-${lang}`);
+      if (newText) {
+        element.textContent = newText;
+      }
+    });
+    
+    // Update HTML lang attribute
+    document.documentElement.lang = lang;
+    
+    // Store language preference in localStorage
+    localStorage.setItem('preferred-language', lang);
+  }
+
+  function initLanguageSwitcher() {
+    // Set initial language from localStorage or default to 'en'
+    const savedLanguage = localStorage.getItem('preferred-language') || 'en';
+    switchLanguage(savedLanguage);
+    
+    // Add event listeners to language buttons
+    document.querySelectorAll('.language-switcher .btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const lang = this.getAttribute('data-lang');
+        switchLanguage(lang);
+      });
+    });
+  }
+
+  // Initialize language switcher when DOM is loaded
+  document.addEventListener('DOMContentLoaded', function() {
+    initLanguageSwitcher();
+  });
+
   /**
    * Apply .scrolled class to the body as the page is scrolled down
    */
